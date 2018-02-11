@@ -1,7 +1,8 @@
 console.log('app component is working.');
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import Navbar from './component/Navbar';
+import { Text, View } from 'react-native';
+import Navbar from './components/Navbar';
+import LoginPage from './components/pages/LoginPage';
 
 export default class App extends Component {
   componentDidMount() {
@@ -13,7 +14,10 @@ export default class App extends Component {
   render() {
     console.log('render()');
     return (
-        <Navbar/>
+        <View>
+          <Navbar/>
+          <LoginPage />
+        </View>
       );
     }
 }
