@@ -3,6 +3,7 @@ import {
     View, Text,
     TextInput, Button
 } from 'react-native';
+import Validator from 'validator';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -10,10 +11,20 @@ class LoginForm extends React.Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: {}
         };
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.checkEmail = this.checkEmail.bind(this);
+    }
+
+    checkEmail() {
+        console.log('checkEmail', this.state.email);
+        if (!Validator.isEmail(this.state.email)) 
+            this.setState({ errors: { email: 'not email' }})
+        else 
+            this.setState({ errors: { email: '' } });
     }
 
     onSubmit() {
@@ -26,10 +37,12 @@ class LoginForm extends React.Component {
                 <Text>Login</Text>
                 <TextInput
                     style={{ padding: 5, height: 40, borderColor: 'orange', borderWidth: 1}}
-                    onChangeText={(email) => this.setState({ email })}
+                    onChangeText={(email) => this.setState({ email: email.toLowerCase() })}
                     value={this.state.email}
                     placeholder="prawee@hotmail.com"
+                    onBlur={this.checkEmail}
                 />
+                <Text>{this.state.errors.email}</Text>
 
                 <TextInput 
                     style={{padding: 5, marginTop: 5, height: 40, borderColor: 'orange', borderWidth: 1}}
