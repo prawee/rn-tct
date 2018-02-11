@@ -7,6 +7,7 @@ import LoginForm from '../forms/LoginForm';
 class LoginPage extends Component {
     submit() {
         console.log('submit on LoginPage');
+        // call to api
     }
     render() {
         return (
