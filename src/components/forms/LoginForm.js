@@ -10,9 +10,12 @@ class LoginForm extends React.Component {
         super(props);
 
         this.state = {
-            email: '',
-            password: '',
-            errors: {}
+            email: 'prawee@hotmail.com',
+            password: 'test',
+            errors: {
+                email: '',
+                password: ''
+            }
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -21,14 +24,29 @@ class LoginForm extends React.Component {
 
     checkEmail() {
         console.log('checkEmail', this.state.email);
+        const { email } = this.state.errors;
         if (!Validator.isEmail(this.state.email)) 
-            this.setState({ errors: { email: 'not email' }})
+            this.setState({ email: 'not email' });
         else 
-            this.setState({ errors: { email: '' } });
+            this.setState({ email: '' });
+    }
+
+    checkPassword() {
+        // home work
     }
 
     onSubmit() {
-        console.log('onSubmit', this.state);
+        //console.log('onSubmit', this.state);
+        const { email, password, errors } = this.state;
+        if (
+            errors.email == '' && 
+            errors.password == '' && 
+            email !== '' &&
+            password !== ''
+        ) {
+            this.props.submit(this.state);
+        }
+        //console.log('onSubmit', this.state);
     }
     
     render() {
