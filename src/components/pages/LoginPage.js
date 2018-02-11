@@ -5,9 +5,12 @@ import LoginForm from '../forms/LoginForm';
 // const LoginPage = () => <Text>Login Page</Text>;
 
 class LoginPage extends Component {
+    submit() {
+        console.log('submit on LoginPage');
+    }
     render() {
         return (
-            <LoginForm />
+            <LoginForm submit={this.submit} />
         );
     }
 }
