@@ -20,27 +20,52 @@ class LoginForm extends React.Component {
         };
 
         this.onSubmit = this.onSubmit.bind(this);
-        this.checkEmail = this.checkEmail.bind(this);
-        this.checkPassword = this.checkPassword.bind(this);
+        //this.checkEmail = this.checkEmail.bind(this);
+        //this.checkPassword = this.checkPassword.bind(this);
+        this.validate = this.validate.bind(this);
     }
 
-    checkEmail() {
-        if (!Validator.isEmail(this.state.email)) {
-            this.setState({ errors: {...this.state.errors, email: 'not email format' } });
-        } else {
-            this.setState({ errors: {...this.state.errors, email: '' } });
-        }
-    }
+    // checkEmail() {
+    //     if (!Validator.isEmail(this.state.email)) {
+    //         this.setState({ errors: {...this.state.errors, email: 'not email format' } });
+    //     } else {
+    //         this.setState({ errors: {...this.state.errors, email: '' } });
+    //     }
+    // }
 
-    checkPassword() {
-        if (this.state.password.length < 8) {
-            this.setState({ errors: {...this.state.errors, password: 'more than 8' } });
-            this.setState({ disabled: true });
-        } else {
-            this.setState({ errors: {...this.state.errors, password: '' } });
-            this.setState({ disabled: false });
+    // checkPassword() {
+    //     if (this.state.password.length < 7 ) {
+    //         this.setState({ errors: {...this.state.errors, password: 'more than 8' } });
+    //         this.setState({ disabled: true });
+    //     } else {
+    //         this.setState({ errors: {...this.state.errors, password: '' } });
+    //         this.setState({ disabled: false });
+    //     }
+    // }
+
+    validate(type, value) {
+        console.log(type, value);
+        if (type == 'email') {
+            this.setState({ email: value });
+            if (!Validator.isEmail(this.state.email)) {
+                console.log('isEmail=no');
+                this.setState({ errors: {...this.state.errors, email: 'not email format' } });
+            } else {
+                console.log('isEmail=Yes');
+                this.setState({ errors: {...this.state.errors, email: '' } });
+            }
         }
-        console.log(this.state);
+
+        if (type == 'password') {
+            this.setState({ password: value });
+            if (this.state.password.length < 7 ) {
+                this.setState({ errors: {...this.state.errors, password: 'more than 8' } });
+                this.setState({ disabled: true });
+            } else {
+                this.setState({ errors: {...this.state.errors, password: '' } });
+                this.setState({ disabled: false });
+            }
+        }
     }
 
     onSubmit() {
@@ -63,10 +88,14 @@ class LoginForm extends React.Component {
                 <Text>Login</Text>
                 <TextInput
                     style={{ padding: 5, height: 40, borderColor: 'orange', borderWidth: 1}}
-                    onChangeText={(email) => this.setState({ email: email.toLowerCase() })}
+                    //onChangeText={(email) => this.setState({ email: email.toLowerCase() })}
+                    onChangeText={(text) => this.validate('email',text)}
+                    id="email"
+                    name="email"
                     value={this.state.email}
                     placeholder="prawee@hotmail.com"
-                    onBlur={this.checkEmail}
+                    //onChange={this.validate}
+                    //onBlur={this.checkEmail}
                 />
                 <Text>{this.state.errors.email}</Text>
 
@@ -74,9 +103,12 @@ class LoginForm extends React.Component {
                     style={{padding: 5, marginTop: 5, height: 40, borderColor: 'orange', borderWidth: 1}}
                     placeholder="Password"
                     secureTextEntry
-                    onChangeText={(password) => this.setState({ password })}
+                    //onChangeText={(password) => this.setState({ password })}
+                    //onChangeText={(password) => this.validate(passwrd)}
+                    onChangeText={(text) => this.validate('password', text)}
                     value={this.state.password}
-                    onKeyPress={this.checkPassword}
+                    //onChange={this.validate}
+                    //onKeyPress={this.checkPassword}
                 />
                 <Text>{this.state.errors.password}</Text>
 

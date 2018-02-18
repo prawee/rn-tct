@@ -5,8 +5,8 @@ import LoginForm from '../forms/LoginForm';
 // const LoginPage = () => <Text>Login Page</Text>;
 
 class LoginPage extends Component {
-    submit() {
-        console.log('submit on LoginPage');
+    submit(data) {
+        console.log('submit on LoginPage', data);
         // call to api
     }
     render() {
