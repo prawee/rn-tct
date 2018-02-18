@@ -15,24 +15,32 @@ class LoginForm extends React.Component {
             errors: {
                 email: '',
                 password: ''
-            }
+            },
+            disabled: true
         };
 
         this.onSubmit = this.onSubmit.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
+        this.checkPassword = this.checkPassword.bind(this);
     }
 
     checkEmail() {
-        console.log('checkEmail', this.state.email);
-        const { email } = this.state.errors;
-        if (!Validator.isEmail(this.state.email)) 
-            this.setState({ email: 'not email' });
-        else 
-            this.setState({ email: '' });
+        if (!Validator.isEmail(this.state.email)) {
+            this.setState({ errors: {...this.state.errors, email: 'not email format' } });
+        } else {
+            this.setState({ errors: {...this.state.errors, email: '' } });
+        }
     }
 
     checkPassword() {
-        // home work
+        if (this.state.password.length < 8) {
+            this.setState({ errors: {...this.state.errors, password: 'more than 8' } });
+            this.setState({ disabled: true });
+        } else {
+            this.setState({ errors: {...this.state.errors, password: '' } });
+            this.setState({ disabled: false });
+        }
+        console.log(this.state);
     }
 
     onSubmit() {
@@ -68,8 +76,12 @@ class LoginForm extends React.Component {
                     secureTextEntry
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password}
+                    onKeyPress={this.checkPassword}
                 />
+                <Text>{this.state.errors.password}</Text>
+
                 <Button 
+                    disabled={this.state.disabled}
                     title="Login"
                     onPress={this.onSubmit}
                 />
